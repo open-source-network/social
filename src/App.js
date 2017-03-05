@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 
 class App extends Component {
   componentDidMount() {
