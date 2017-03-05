@@ -1,0 +1,14 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  node:
+    version: 7.7.1
+
+deployment:
+  stable:
+    branch: [/master/]
+    commands:
+      - npm run deploy
