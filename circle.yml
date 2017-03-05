@@ -11,4 +11,6 @@ deployment:
   stable:
     branch: [/master/]
     commands:
+      - git config --global user.email "noreply@github.com"
+      - git config --global user.name "GH Deploy"
       - npm run deploy
