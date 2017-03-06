@@ -9,6 +9,7 @@ var readFileSync = require('fs').readFileSync;
 var writeFileSync = require('fs').writeFileSync;
 var readdirSync = require('fs').readdirSync;
 var sha3_224 = require('js-sha3').sha3_224;
+var fetch = require('node-fetch');
 
 var startTime = Date.now();
 var timeout = startTime + (1000 * 60 * 10); // 10 minutes
@@ -41,8 +42,16 @@ function enqueueTask(name, params) {
 	tasks.push({ name: name, params: params, id: id});
 }
 
-function crawlRoot(params) {
+function crawlRoot(params, cb) {
 	console.log('crawling root');
+	fetch('https://api.github.com/repos/open-source-network/social/issues/1').then(function(resp) {
+		return resp.json();
+	}).then(function(issueData) {
+		console.log('resp', issueData);
+		cb();
+	}).catch(function() {
+		cb();
+	});
 }
 
 var taskHandlers = {
@@ -52,14 +61,16 @@ var taskHandlers = {
 function doTasks() {
 	var taskToDo = tasks.shift();
 	
-	taskHandlers[taskToDo.name](taskToDo.params);
+	taskHandlers[taskToDo.name](taskToDo.params, function() {
 
-	tasks = tasks.filter(function(task) { return task.id !== taskToDo.id; });
-	
-	if (tasks.length > 0 && Date.now() < timeout) {
-		doTasks();
-	}
-	
+		tasks = tasks.filter(function(task) { return task.id !== taskToDo.id; });
+		
+		if (tasks.length > 0 && Date.now() < timeout) {
+			doTasks();
+		}
+
+		
+	});
 }
 
 doTasks();
