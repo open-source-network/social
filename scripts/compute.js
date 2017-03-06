@@ -30,10 +30,6 @@ tasks.push('something');
 
 writeFileSync(tasksFile, JSON.stringify(tasks));
 
-console.log('git add', readdirSync(dataDir));
-
 execFileSync('git', [ 'add', tasksFile ], { cwd: dataDir, stdio: 'inherit'});
-
-console.log('git push');
-
+execFileSync('git', [ 'commit', '-m', 'Update-'+Date.now() ], { cwd: dataDir, stdio: 'inherit'});
 execFileSync('git', [ 'push' ], { cwd: dataDir, stdio: 'inherit' });
