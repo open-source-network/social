@@ -81,8 +81,9 @@ doTasks();
 enqueueTask('crawlRoot');
 
 writeFileSync(tasksFile, JSON.stringify(tasks));
-writeFileSync(userListFile, JSON.stringify(userList));
-
 execFileSync('git', [ 'add', tasksFile ], { cwd: dataDir, stdio: 'inherit'});
+writeFileSync(userListFile, JSON.stringify(userList));
+execFileSync('git', [ 'add', userListFile ], { cwd: dataDir, stdio: 'inherit'});
+
 execFileSync('git', [ 'commit', '-m', 'Update-'+startTime ], { cwd: dataDir, stdio: 'inherit'});
 execFileSync('git', [ 'push' ], { cwd: dataDir, stdio: 'inherit' });
