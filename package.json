@@ -2,6 +2,7 @@
   "name": "open-source-network",
   "version": "0.1.0",
   "dependencies": {
+    "js-sha3": "^0.5.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
