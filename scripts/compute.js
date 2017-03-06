@@ -6,6 +6,7 @@ var tasksFile = join(dataDir, 'tasks.json');
 var execFileSync = child_process.execFileSync;
 var readFileSync = require('fs').readFileSync;
 var writeFileSync = require('fs').writeFileSync;
+var readdirSync = require('fs').readdirSync;
 
 execFileSync('git', [
 'clone', 
@@ -29,7 +30,7 @@ tasks.push('something');
 
 writeFileSync(tasksFile, JSON.stringify(tasks));
 
-console.log('git add');
+console.log('git add', readdirSync(dataDir));
 
 execFileSync('git', [ 'add', tasksFile ], { cwd: dataDir, stdio: 'inherit'});
 
