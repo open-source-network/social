@@ -59,7 +59,7 @@ var taskHandlers = {
 	crawlRoot,
 };
 
-function doTasks() {
+function doTasks(cb) {
 	if (!tasks.length) {
 		return;
 	}
@@ -70,21 +70,27 @@ function doTasks() {
 		tasks = tasks.filter(function(task) { return task.id !== taskToDo.id; });
 		
 		if (tasks.length > 0 && Date.now() < timeout) {
-			doTasks();
+			doTasks(cb);
+		} else {
+			cb();
 		}
 
-		
 	});
 }
 
-doTasks();
+doTasks(function() {
+	
+	enqueueTask('crawlRoot');
+	
+	writeFileSync(tasksFile, JSON.stringify(tasks));
+	execFileSync('git', [ 'add', tasksFile ], { cwd: dataDir, stdio: 'inherit'});
+	writeFileSync(userListFile, JSON.stringify(userList));
+	execFileSync('git', [ 'add', userListFile ], { cwd: dataDir, stdio: 'inherit'});
+	
+	try {
+	execFileSync('git', [ 'commit', '-m', 'Update-'+startTime ], { cwd: dataDir, stdio: 'inherit'});
+	execFileSync('git', [ 'push' ], { cwd: dataDir, stdio: 'inherit' });
+	} catch(e) {}
 
-enqueueTask('crawlRoot');
+});
 
-writeFileSync(tasksFile, JSON.stringify(tasks));
-execFileSync('git', [ 'add', tasksFile ], { cwd: dataDir, stdio: 'inherit'});
-writeFileSync(userListFile, JSON.stringify(userList));
-execFileSync('git', [ 'add', userListFile ], { cwd: dataDir, stdio: 'inherit'});
-
-execFileSync('git', [ 'commit', '-m', 'Update-'+startTime ], { cwd: dataDir, stdio: 'inherit'});
-execFileSync('git', [ 'push' ], { cwd: dataDir, stdio: 'inherit' });
