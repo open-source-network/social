@@ -12,7 +12,7 @@ execFileSync('git', [
 '-b', 'data',
 'git@github.com:open-source-network/social.git',
 'datacheckout'
-], { cwd: home });
+], { cwd: home, stdio: 'inherit' });
 
 var tasks = [];
 try {
@@ -29,5 +29,5 @@ tasks.push('something');
 
 writeFileSync(tasksFile, JSON.stringify(tasks));
 
-execFileSync('git', [ 'add', '.' ], { cwd: dataDir });
-execFileSync('git', [ 'push' ], { cwd: dataDir });
+execFileSync('git', [ 'add', '.' ], { cwd: dataDir, stdio: 'inherit'});
+execFileSync('git', [ 'push' ], { cwd: dataDir, stdio: 'inherit' });
