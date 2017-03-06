@@ -49,7 +49,8 @@ function crawlRoot(params, cb) {
 	}).then(function(issueData) {
 		console.log('resp', issueData);
 		cb();
-	}).catch(function() {
+	}).catch(function(err) {
+		console.error('problem getting issue', err);
 		cb();
 	});
 }
