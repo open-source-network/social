@@ -44,7 +44,7 @@ function enqueueTask(name, params) {
 
 function crawlRoot(params, cb) {
 	console.log('crawling root');
-	fetch('https://api.github.com/repos/open-source-network/social/issues/1').then(function(resp) {
+	fetch('https://api.github.com/repos/open-source-network/social/issues/1/comments').then(function(resp) {
 		return resp.json();
 	}).then(function(issueData) {
 		console.log('resp', issueData);
@@ -74,6 +74,8 @@ function doTasks() {
 }
 
 doTasks();
+
+enqueueTask('crawlRoot');
 
 writeFileSync(tasksFile, JSON.stringify(tasks));
 writeFileSync(userListFile, JSON.stringify(userList));
