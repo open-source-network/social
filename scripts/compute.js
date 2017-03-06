@@ -52,7 +52,7 @@ var taskHandlers = {
 function doTasks() {
 	var taskToDo = tasks.shift();
 	
-	taskHandlers[task.name](taskToDo.params);
+	taskHandlers[taskToDo.name](taskToDo.params);
 
 	tasks = tasks.filter(function(task) { return task.id !== taskToDo.id; });
 	
