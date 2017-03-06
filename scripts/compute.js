@@ -45,6 +45,7 @@ function enqueueTask(name, params) {
 function crawlRoot(params, cb) {
 	console.log('crawling root');
 	fetch('https://api.github.com/repos/open-source-network/social/issues/1/comments').then(function(resp) {
+		console.log('json');
 		return resp.json();
 	}).then(function(issueData) {
 		console.log('resp', issueData);
@@ -58,6 +59,7 @@ function crawlRoot(params, cb) {
 var taskHandlers = {
 	crawlRoot,
 };
+
 
 function doTasks(cb) {
 	if (!tasks.length) {
