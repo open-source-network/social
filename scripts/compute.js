@@ -45,14 +45,14 @@ function crawlRoot(params) {
 	console.log('crawling root');
 }
 
-var tasks = {
+var taskHandlers = {
 	crawlRoot,
 };
 
 function doATask() {
 	var taskToDo = tasks.shift();
 	
-	tasks[task.name](taskToDo.params);
+	taskHandlers[task.name](taskToDo.params);
 
 	tasks = tasks.filter(function(task) { return task.id !== taskToDo.id; });
 	
