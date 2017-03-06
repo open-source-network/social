@@ -59,6 +59,9 @@ var taskHandlers = {
 };
 
 function doTasks() {
+	if (!tasks.length) {
+		return;
+	}
 	var taskToDo = tasks.shift();
 	
 	taskHandlers[taskToDo.name](taskToDo.params, function() {
