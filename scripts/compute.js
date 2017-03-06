@@ -49,7 +49,7 @@ var taskHandlers = {
 	crawlRoot,
 };
 
-function doATask() {
+function doTasks() {
 	var taskToDo = tasks.shift();
 	
 	taskHandlers[task.name](taskToDo.params);
@@ -57,10 +57,12 @@ function doATask() {
 	tasks = tasks.filter(function(task) { return task.id !== taskToDo.id; });
 	
 	if (tasks.length > 0 && Date.now() < timeout) {
-		doATask();
+		doTasks();
 	}
 	
 }
+
+doTasks();
 
 writeFileSync(tasksFile, JSON.stringify(tasks));
 writeFileSync(userListFile, JSON.stringify(userList));
