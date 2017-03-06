@@ -2,6 +2,7 @@ general:
   branches:
     ignore:
       - gh-pages
+      - data
 
 machine:
   node:
@@ -13,4 +14,5 @@ deployment:
     commands:
       - git config --global user.email "noreply@github.com"
       - git config --global user.name "GH Deploy"
+      - node scripts/compute.js
       - npm run deploy
